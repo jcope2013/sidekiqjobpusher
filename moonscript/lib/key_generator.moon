@@ -4,5 +4,3 @@ class KeyGenerator
       namespace..':queue:'..queue
     else
       'queue:'..queue
-
-return KeyGenerator
