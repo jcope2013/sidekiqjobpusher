@@ -2,7 +2,11 @@ local KeyGenerator
 do
   local _base_0 = {
     generate = function(queue, namespace)
-      return queue
+      if namespace then
+        return namespace .. ':queue:' .. queue
+      else
+        return 'queue:' .. queue
+      end
     end
   }
   _base_0.__index = _base_0
