@@ -1,5 +1,5 @@
 class Client
-  new: (redis, namespace)
+  new: (redis, namespace) ->
     @redis = redis
     @namespace = namespace
     KeyGenrator = require 'sidekiqjobpusher.key_generator'
