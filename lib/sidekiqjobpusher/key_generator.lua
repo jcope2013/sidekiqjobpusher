@@ -24,5 +24,5 @@ do
   })
   _base_0.__class = _class_0
   KeyGenerator = _class_0
+  return _class_0
 end
-return KeyGenerator
