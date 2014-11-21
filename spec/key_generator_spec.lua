@@ -1,0 +1,11 @@
+return describe('KeyGenerator', function()
+  local gen
+  before_each(function()
+    local KeyGenerator = require('sidekiqjobpusher.key_generator')
+    gen = KeyGenerator()
+  end)
+  return it("can genertate a key", function()
+    local key = gen.generate('my_queue')
+    return assert.are.equal('my_queue', key)
+  end)
+end)

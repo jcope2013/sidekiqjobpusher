@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+Dir['./moonscript/lib/*'].each do |f|
+  file_name = f.gsub /(\.\/moonscript\/lib\/|\.moon)/, ''
+  `moonc -o \`pwd\`/lib/sidekiqjobpusher/#{file_name}.lua moonscript/lib/#{file_name}.moon`
+end
+
+Dir['./moonscript/spec/*'].each do |f|
+  file_name = f.gsub /(\.\/moonscript\/spec\/|\.moon)/, ''
+  `moonc -o \`pwd\`/spec/#{file_name}.lua moonscript/spec/#{file_name}.moon`
+end
