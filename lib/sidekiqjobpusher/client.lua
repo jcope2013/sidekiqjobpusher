@@ -1,7 +1,7 @@
 local Client
 do
   local _base_0 = {
-    perform = function(worker_class, arguments, retry, queue)
+    perform = function(self, worker_class, arguments, retry, queue)
       if arguments == nil then
         arguments = { }
       end
@@ -13,17 +13,17 @@ do
       end
       local key = self.key_generator.generate(queue, self.namespace)
       local message = self.messgae_serialiser.serialise(worker_class, arguments, retry)
-      return self.redis:lpush(key, message)
+      return self.redis.lpush(key, message)
     end
   }
   _base_0.__index = _base_0
   local _class_0 = setmetatable({
-    __init = function(redis, namespace)
+    __init = function(self, redis, namespace)
       self.redis = redis
       self.namespace = namespace
-      local KeyGenrator = require('sidekiqjobpusher.key_generator')
-      self.key_generator = KeyGenrator()
-      local MessageSerialiser = require('sidekiqjobpusher.serialiser')
+      local KeyGenerator = require('sidekiqjobpusher.key_generator')
+      self.key_generator = KeyGenerator()
+      local MessageSerialiser = require('sidekiqjobpusher.message_serialiser')
       self.messgae_serialiser = MessageSerialiser()
     end,
     __base = _base_0,
