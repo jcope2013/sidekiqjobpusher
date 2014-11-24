@@ -13,7 +13,7 @@ do
       end
       local key = self.key_generator.generate(queue, self.namespace)
       local message = self.messgae_serialiser.serialise(worker_class, arguments, retry)
-      return self.redis.lpush(key, message)
+      return self.redis:lpush(key, message)
     end
   }
   _base_0.__index = _base_0
