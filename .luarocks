@@ -1,2 +1,3 @@
 lua-cjson
+redis-lua
 busted

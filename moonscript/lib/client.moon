@@ -4,7 +4,7 @@ class Client
     @namespace = namespace
     KeyGenrator = require 'sidekiqjobpusher.key_generator'
     @key_generator = KeyGenrator!
-    MessageSerialiser = require 'sidekiqjobpusher.serialiser'
+    MessageSerialiser = require 'sidekiqjobpusher.message_serialiser'
     @messgae_serialiser = MessageSerialiser!
 
   perform: (worker_class, arguments = {}, retry = false, queue = 'default') ->
