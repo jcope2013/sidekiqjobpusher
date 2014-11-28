@@ -1,7 +1,8 @@
 package = "sidekiqjobpusher"
 version = "1.0-1"
 source = {
-   url = "https://github.com/tomdmaguire/sidekiqjobpusher"
+   url = "git://github.com/tomdmaguire/sidekiqjobpusher",
+   tag = "v1.0"
 }
 description = {
    summary = "Sidekiq API",
