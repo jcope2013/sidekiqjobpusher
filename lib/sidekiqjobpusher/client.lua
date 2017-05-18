@@ -28,7 +28,7 @@ do
         queue = 'default'
       end
 
-      local message = self.message_serializer.serialize(worker_class, arguments, retry, queue, at)
+      local message = self.message_serializer.serialize(worker_class, arguments, retry, queue, nil)
       return self.redis:zadd('schedule', at, message)
     end
   }
