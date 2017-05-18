@@ -1,29 +1,20 @@
 if not cjson then
   cjson = require("cjson")
 end
-local rand = require "openssl.rand"
-local bignum = require "openssl.bignum"
 local MessageSerializer
 do
   local _base_0 = {
-    serialize = function(worker_class, args, retry, queue, at)
-      queue = queue or 'default'
-      -- jid = bignum.fromBinary(rand.bytes(10)) -- fix this
-      -- return cjson.encode({
-      --   class = worker_class,
-      --   args = args,
-      --   retry = retry
-      -- })
+    serialize = function(worker_class, args, retry, queue, enqueued_at)
       jid = '11'
-      return cjson.encode({
+      params = {
         class = worker_class,
         args = args,
         retry = retry,
         queue = queue,
-        jid = jid,
         created_at = os.time()
-      })
-      -- add enqueued_at if no at (immediate job)
+      }
+      if enqueued_at then params['enqueued_at'] = os.time() end
+      return cjson.encode(params)
     end
   }
   _base_0.__index = _base_0

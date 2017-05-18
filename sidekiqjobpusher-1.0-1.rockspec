@@ -14,8 +14,7 @@ description = {
 }
 dependencies = {
    "lua ~> 5.1",
-   "lua-cjson",
-   "luaossl"
+   "lua-cjson"
 }
 build = {
    type = "builtin",
