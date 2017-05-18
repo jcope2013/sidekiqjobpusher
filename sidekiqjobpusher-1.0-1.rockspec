@@ -14,13 +14,14 @@ description = {
 }
 dependencies = {
    "lua ~> 5.1",
-   "lua-cjson"
+   "lua-cjson",
+   "luaossl"
 }
 build = {
    type = "builtin",
    modules = {
       ['sidekiqjobpusher.client'] = "lib/sidekiqjobpusher/client.lua",
       ['sidekiqjobpusher.key_generator'] = "lib/sidekiqjobpusher/key_generator.lua",
-      ['sidekiqjobpusher.message_serialiser'] = "lib/sidekiqjobpusher/message_serialiser.lua"
+      ['sidekiqjobpusher.message_serializer'] = "lib/sidekiqjobpusher/message_serializer.lua"
    }
 }

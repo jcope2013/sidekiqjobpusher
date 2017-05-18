@@ -1,7 +1,7 @@
 local Client
 do
   local _base_0 = {
-    perform = function(self, worker_class, arguments, retry, queue)
+    perform = function(self, worker_class, arguments, at, retry, queue)
       if arguments == nil then
         arguments = { }
       end
@@ -11,9 +11,14 @@ do
       if queue == nil then
         queue = 'default'
       end
-      local key = self.key_generator.generate(queue, self.namespace)
-      local message = self.messgae_serialiser.serialise(worker_class, arguments, retry)
-      return self.redis:lpush(key, message)
+      local message = self.message_serializer.serialize(worker_class, arguments, retry, queue, at)
+
+      if at == nil then
+        local key = self.key_generator.generate(queue, self.namespace)
+        return self.redis:lpush(key, message)
+      else
+        return self.redis:zadd('schedule', at, message)
+      end
     end
   }
   _base_0.__index = _base_0
@@ -23,8 +28,8 @@ do
       self.namespace = namespace
       local KeyGenerator = require('sidekiqjobpusher.key_generator')
       self.key_generator = KeyGenerator()
-      local MessageSerialiser = require('sidekiqjobpusher.message_serialiser')
-      self.messgae_serialiser = MessageSerialiser()
+      local MessageSerializer = require('sidekiqjobpusher.message_serializer')
+      self.message_serializer = MessageSerializer()
     end,
     __base = _base_0,
     __name = "Client"

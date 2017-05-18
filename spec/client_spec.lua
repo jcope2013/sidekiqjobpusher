@@ -9,7 +9,7 @@ return describe('Client', function()
     pusher:perform('MyWorker', {
       arg1 = 'one',
       arg2 = 'two'
-    }, true, 'my_queue')
+    }, nil, true, 'my_queue')
     local expected_key = 'my_namespace:queue:my_queue'
     local expected_message = '{"args":{"arg1":"one","arg2":"two"},"class":"MyWorker","retry":true}'
     return assert.stub(redis.lpush).was.called_with(expected_key, expected_message)
