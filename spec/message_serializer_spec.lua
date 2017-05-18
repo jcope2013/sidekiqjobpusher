@@ -14,7 +14,7 @@ return describe('MessageSerializer', function()
       args = {"arg1", "arg2"},
       retry = true,
       queue = "default",
-      jid = "11",
+      jid = tostring(os.time()),
       created_at = os.time(),
       enqueued_at = os.time()
     }
@@ -30,8 +30,7 @@ return describe('MessageSerializer', function()
       args = {"arg1", "arg2"},
       retry = true,
       queue = "default",
-      jid = "11",
-      created_at = os.time()
+      jid = tostring(os.time())
     }
     return assert.are.same(serialised, cjson.encode(params))
   end)
