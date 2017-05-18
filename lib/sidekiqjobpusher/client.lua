@@ -14,6 +14,7 @@ do
       local message = self.message_serializer.serialize(worker_class, arguments, retry, queue, '1')
 
       local key = self.key_generator.generate(queue, self.namespace)
+      self.redis:sadd("queues", queue)
       return self.redis:lpush(key, message)
     end,
 
@@ -28,7 +29,7 @@ do
         queue = 'default'
       end
 
-      local message = self.message_serializer.serialize(worker_class, arguments, retry, queue, nil)
+      local message = self.message_serializer.serialize(worker_class, arguments, retry, queue)
       return self.redis:zadd('schedule', at, message)
     end
   }

@@ -4,16 +4,18 @@ end
 local MessageSerializer
 do
   local _base_0 = {
-    serialize = function(worker_class, args, retry, queue, enqueued_at)
-      jid = '11'
+    serialize = function(worker_class, args, retry, queue, immediate)
       params = {
         class = worker_class,
         args = args,
         retry = retry,
         queue = queue,
-        created_at = os.time()
+        jid = tostring(os.time())
       }
-      if enqueued_at then params['enqueued_at'] = os.time() end
+      if immediate then
+        params['created_at'] = os.time()
+        params['enqueued_at'] = os.time()
+      end
       return cjson.encode(params)
     end
   }
