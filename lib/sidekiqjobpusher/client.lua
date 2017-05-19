@@ -1,7 +1,7 @@
 local Client
 do
   local _base_0 = {
-    perform = function(self, worker_class, arguments, retry, queue)
+    perform = function(self, worker_class, arguments, jid, retry, queue)
       if arguments == nil then
         arguments = { }
       end
@@ -11,14 +11,14 @@ do
       if queue == nil then
         queue = 'default'
       end
-      local message = self.message_serializer.serialize(worker_class, arguments, retry, queue, '1')
+      local message = self.message_serializer.serialize(worker_class, arguments, retry, queue, jid, '1')
 
       local key = self.key_generator.generate(queue, self.namespace)
       self.redis:sadd("queues", queue)
       return self.redis:lpush(key, message)
     end,
 
-    perform_in = function(self, worker_class, arguments, at, retry, queue)
+    perform_in = function(self, worker_class, arguments, at, jid, retry, queue)
       if arguments == nil then
         arguments = { }
       end
@@ -29,7 +29,7 @@ do
         queue = 'default'
       end
 
-      local message = self.message_serializer.serialize(worker_class, arguments, retry, queue)
+      local message = self.message_serializer.serialize(worker_class, arguments, retry, queue, jid)
       return self.redis:zadd('schedule', at, message)
     end
   }

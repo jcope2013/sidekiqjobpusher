@@ -1,20 +1,23 @@
 if not cjson then
   cjson = require("cjson")
 end
+if not socket then
+  socket = require("socket")
+end
 local MessageSerializer
 do
   local _base_0 = {
-    serialize = function(worker_class, args, retry, queue, immediate)
+    serialize = function(worker_class, args, retry, queue, jid, immediate)
       params = {
         class = worker_class,
         args = args,
         retry = retry,
         queue = queue,
-        jid = tostring(os.time())
+        jid = jid
       }
       if immediate then
-        params['created_at'] = os.time()
-        params['enqueued_at'] = os.time()
+        params['created_at'] = socket.gettime()
+        params['enqueued_at'] = socket.gettime()
       end
       return cjson.encode(params)
     end

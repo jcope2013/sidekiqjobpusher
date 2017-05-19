@@ -1,3 +1,4 @@
+socket = require("socket")
 return describe('MessageSerializer', function()
   local ser
   before_each(function()
@@ -8,15 +9,15 @@ return describe('MessageSerializer', function()
     local serialised = ser.serialize('MyWorker', {
       'arg1',
       'arg2'
-    }, true, 'default', '1')
+    }, true, 'default', '12', '1')
     local params = {
       class = "MyWorker",
       args = {"arg1", "arg2"},
       retry = true,
       queue = "default",
-      jid = tostring(os.time()),
-      created_at = os.time(),
-      enqueued_at = os.time()
+      jid = "12",
+      created_at = socket.gettime(),
+      enqueued_at = socket.gettime()
     }
     return assert.are.same(serialised, cjson.encode(params))
   end)
@@ -24,13 +25,13 @@ return describe('MessageSerializer', function()
     local serialised = ser.serialize('MyWorker', {
       'arg1',
       'arg2'
-    }, true, 'default')
+    }, true, 'default', '11')
     local params = {
       class = "MyWorker",
       args = {"arg1", "arg2"},
       retry = true,
       queue = "default",
-      jid = tostring(os.time())
+      jid = "11"
     }
     return assert.are.same(serialised, cjson.encode(params))
   end)

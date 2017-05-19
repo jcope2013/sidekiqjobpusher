@@ -24,11 +24,12 @@ return describe('Client', function()
     }
     local expected_key = 'schedule'
     local expected_message = cjson.encode(params)
-    return assert.stub(redis:zadd).was.called_with(expected_key, expected_at, expected_message)
+    return assert.stub(redis.zadd).was.called_with(expected_key, expected_at, expected_message)
   end)
   it("schedules jobs on a custom namespace", function()
     local redis = {
-      lpush = (function(key, val) end)
+      lpush = (function(key, val) end),
+      sadd = (function(key, val) end)
     }
     local m = mock(redis, true)
     local Client = require('sidekiqjobpusher.client')
@@ -51,11 +52,12 @@ return describe('Client', function()
     }
     local expected_key = 'my_namespace:queue:my_queue'
     local expected_message = cjson.encode(params)
-    return assert.stub(redis:lpush).was.called_with(expected_key, expected_message)
+    return assert.stub(redis.lpush).was.called_with(expected_key, expected_message)
   end)
   return it("schedules jobs", function()
     local redis = {
-      lpush = (function(key, val) end)
+      lpush = (function(key, val) end),
+      sadd = (function(key, val) end)
     }
     local m = mock(redis, true)
     local Client = require('sidekiqjobpusher.client')
@@ -78,6 +80,6 @@ return describe('Client', function()
     }
     local expected_key = 'queue:my_queue'
     local expected_message = cjson.encode(params)
-    return assert.stub(redis:lpush).was.called_with(expected_key, expected_message)
+    return assert.stub(redis.lpush).was.called_with(expected_key, expected_message)
   end)
 end)
